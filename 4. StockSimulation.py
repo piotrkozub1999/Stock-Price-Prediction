@@ -7,7 +7,7 @@ from pickle import load
 from keras.models import load_model
 import matplotlib.pyplot as plt
 
-Lenght = 1000
+Lenght = 100
 
 # Define the strategy class
 class TradingSignalStrategy(bt.Strategy):
@@ -72,14 +72,16 @@ class PredictionStrategy(bt.Strategy):
         self.rescaled_pred = self.y_scaler.inverse_transform(self.pred)
         self.pred_mean = self.rescaled_pred[0].mean()
 
-        if self.pred_mean > self.dataclose[0]+(self.dataclose[0]*0.005) and self.previousBuy != True:
+        if self.pred_mean > self.dataclose[0] + (self.dataclose[0] * 0.005) and self.previousBuy != True:
+        # if self.pred_mean > self.dataclose[0]+(self.dataclose[0]*0.005):
             self.buy(price=self.dataclose[0])
             self.log('BUY CREATE, %.4f' % self.dataclose[0])
             print(self.i)
             self.previousBuy = True
 
         # If the model predicts a higher probability of selling than buying, sell
-        elif self.pred_mean < self.dataclose[0]-(self.dataclose[0]*0.005) and self.previousBuy != False:
+        elif self.pred_mean < self.dataclose[0] - (self.dataclose[0] * 0.005) and self.previousBuy != False:
+        # elif self.pred_mean < self.dataclose[0]-(self.dataclose[0]*0.005):
             self.sell(price=self.dataclose[0])
             self.log('SELL CREATE, %.4f' % self.dataclose[0])
             print(self.i)
@@ -101,14 +103,8 @@ def load_classification_data():
     dataset = dataset.set_index(dataset.Date)
     dataset = dataset.drop("Date", axis='columns')
 
-    n_test = len(dataset) - 2140
-    dataset = dataset.iloc[n_test:]
-
     # n = len(dataset) - Lenght
     # dataset = dataset.iloc[:-n]
-
-    # sort by date in ascending order
-    dataset = dataset.sort_values(by='Date')
 
     print(dataset)
     print(dataset.dtypes)
@@ -127,11 +123,8 @@ def load_prediction_data():
     dataset = dataset.set_index(dataset.Date)
     dataset = dataset.drop("Date", axis='columns')
 
-    n = len(dataset) - Lenght
-    dataset = dataset.iloc[:-n]
-
-    # sort by date in ascending order
-    # dataset = dataset.sort_values(by='Date')
+    # n = len(dataset) - Lenght
+    # dataset = dataset.iloc[:-n]
 
     print(dataset)
     print(dataset.dtypes)
@@ -172,4 +165,4 @@ if __name__ == '__main__':
     # Print the final portfolio value
     print('Final portfolio value: %.2f' % cerebro.broker.getvalue())
 
-    plot1 = cerebro.plot(iplot=True, volume=False, width=32, height=16)
+    plot1 = cerebro.plot(iplot=True, volume=False)
