@@ -1,5 +1,5 @@
 <h1><center>Stock Price Prediction</center></h1>
-<h2><center>Master Thesis</center></h2>
+<h3><center>Master Thesis</center></h3>
 
 The purpose of this paper is to investigate the usefulness of deep neural networks in
 trading systems used when playing the stock market. Firstly introduced the issues related to
@@ -15,3 +15,15 @@ were tested by means of simulated trading, in which the yearly rate of return wa
 giving information on the value of the generated revenue. A final analysis of the results
 allowed the selection of the most beneficial system in terms of profitability and investment
 risk.
+
+<h2><center>Example Results of Simulated Trading</center></h2>
+
+#### EUR/USD 2017
+
+![Results1](./Results/2017.png)
+
+#### EUR/USD 2018
+![Results2](./Results/2018.png)
+
+#### EUR/USD 2019
+![Results3](./Results/2019.png)
